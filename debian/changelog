@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 kafka (0.8.1.1-6) precise; urgency=low
 
   * Use generic snappy version in bin/kafka CLASSPATH
@@ -62,6 +63,8 @@ kafka (0.8~20130827-1) precise; urgency=low
 
  -- Alexandros Kosiaris <akosiaris@wikimedia.org>  Wed, 28 Aug 2013 16:50:14 +0000
 
+=======
+>>>>>>> 918be683... Debianize Kafka
 kafka (0.8~20130610-1) unstable; urgency=low
 
   * Initial release.

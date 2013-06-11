@@ -1,9 +1,16 @@
 --- a/config/log4j.properties	2013-06-12 10:09:28.531748537 +0000
 +++ b/config/log4j.properties	2013-06-12 15:09:40.967449096 +0000
+<<<<<<< HEAD
 @@ -15,17 +15,23 @@
 
  kafka.logs.dir=logs
 
+=======
+@@ -12,17 +12,23 @@
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+>>>>>>> 918be683... Debianize Kafka
 -log4j.rootLogger=INFO, stdout 
 +log4j.rootLogger=INFO, stdout, fileAppender
  
@@ -14,7 +21,11 @@
  
 -log4j.appender.kafkaAppender=org.apache.log4j.DailyRollingFileAppender
 -log4j.appender.kafkaAppender.DatePattern='.'yyyy-MM-dd-HH
+<<<<<<< HEAD
 -log4j.appender.kafkaAppender.File=${kafka.logs.dir}/server.log
+=======
+-log4j.appender.kafkaAppender.File=server.log
+>>>>>>> 918be683... Debianize Kafka
 -log4j.appender.kafkaAppender.layout=org.apache.log4j.PatternLayout
 -log4j.appender.kafkaAppender.layout.ConversionPattern=[%d] %p %m (%c)%n
 +log4j.appender.fileAppender=org.apache.log4j.RollingFileAppender
@@ -30,7 +41,11 @@
  
  log4j.appender.stateChangeAppender=org.apache.log4j.DailyRollingFileAppender
  log4j.appender.stateChangeAppender.DatePattern='.'yyyy-MM-dd-HH
+<<<<<<< HEAD
 @@ -57,22 +63,21 @@
+=======
+@@ -54,24 +60,23 @@
+>>>>>>> 918be683... Debianize Kafka
  #log4j.logger.kafka.perf=DEBUG, kafkaAppender
  #log4j.logger.kafka.perf.ProducerPerformance$ProducerThread=DEBUG, kafkaAppender
  #log4j.logger.org.I0Itec.zkclient.ZkClient=DEBUG
@@ -52,6 +67,11 @@
 -
 -log4j.logger.kafka.log.LogCleaner=INFO, cleanerAppender
 -log4j.additivity.kafka.log.LogCleaner=false
+<<<<<<< HEAD
+=======
+-log4j.logger.kafka.log.Cleaner=INFO, cleanerAppender
+-log4j.additivity.kafka.log.Cleaner=false
+>>>>>>> 918be683... Debianize Kafka
 -
 -log4j.logger.state.change.logger=TRACE, stateChangeAppender
 -log4j.additivity.state.change.logger=false
@@ -63,6 +83,11 @@
 +#
 +#log4j.logger.kafka.log.LogCleaner=INFO, cleanerAppender
 +#log4j.additivity.kafka.log.LogCleaner=false
+<<<<<<< HEAD
+=======
++#log4j.logger.kafka.log.Cleaner=INFO, cleanerAppender
++#log4j.additivity.kafka.log.Cleaner=false
+>>>>>>> 918be683... Debianize Kafka
 +#
 +#log4j.logger.state.change.logger=TRACE, stateChangeAppender
 +#log4j.additivity.state.change.logger=false

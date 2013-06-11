@@ -5,6 +5,7 @@ instead of the standard sbt build system used by upstream. The reason
 for this is to satisfy debian policy that no internet connection should
 be required during package building as well as security concers about
 the downloaded JAR files by sbt
+<<<<<<< HEAD
 
 How to build this package
 -------------------------
@@ -136,3 +137,5 @@ git checkout trunk -- <path> might come in handy
 debian/patches will also need changes
 
 but you will need your good sense in most cases
+=======
+>>>>>>> 918be683... Debianize Kafka

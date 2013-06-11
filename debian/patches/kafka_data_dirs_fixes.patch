@@ -1,6 +1,7 @@
 diff -r -u a/config/server.properties b/config/server.properties
 --- a/config/server.properties	2013-06-12 10:09:28.531748537 +0000
 +++ b/config/server.properties	2013-06-12 10:50:27.995707650 +0000
+<<<<<<< HEAD
 @@ -55,7 +55,7 @@
  ############################# Log Basics #############################
  
@@ -10,4 +11,15 @@ diff -r -u a/config/server.properties b/config/server.properties
  
  # The default number of log partitions per topic. More partitions allow greater
  # parallelism for consumption, but this will also result in more files across
+=======
+@@ -48,7 +48,7 @@
+ ############################# Log Basics #############################
+ 
+ # The directory under which to store log files
+-log.dir=/tmp/kafka-logs
++log.dir=/var/spool/kafka
+ 
+ # The number of logical partitions per topic per server. More partitions allow greater parallelism
+ # for consumption, but also mean more files.
+>>>>>>> 918be683... Debianize Kafka
 

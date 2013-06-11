@@ -2,8 +2,12 @@ Source: kafka
 Section: misc
 Priority: optional
 Maintainer: Alexandros Kosiaris <akosiaris@wikimedia.org>
+<<<<<<< HEAD
 Build-Depends: debhelper (>= 9), openjdk-7-jdk | java7-jdk, javahelper (>= 0.40),
  scala,
+=======
+Build-Depends: debhelper (>= 9), default-jdk, javahelper (>= 0.40),
+>>>>>>> 918be683... Debianize Kafka
  junit4,
  velocity,
  libasm3-java,
@@ -36,9 +40,15 @@ Build-Depends: debhelper (>= 9), openjdk-7-jdk | java7-jdk, javahelper (>= 0.40)
 Standards-Version: 3.9.3
 Homepage: http://kafka.apache.org
 
+<<<<<<< HEAD
 Package: kafka-common
 Architecture: all
 Depends: openjdk-7-jre | java7-runtime, scala-library, adduser, ${java:Depends}, ${misc:Depends}
+=======
+Package: kafka
+Architecture: all
+Depends: default-jre, scala-library, adduser, ${java:Depends}, ${misc:Depends}
+>>>>>>> 918be683... Debianize Kafka
 Recommends: ${java:Recommends}
 Description: Apache Kafka is a distributed publish-subscribe messaging system
  Apache Kafka is designed to support the following
@@ -50,6 +60,7 @@ Description: Apache Kafka is a distributed publish-subscribe messaging system
   distributing consumption over a cluster of consumer machines while
   maintaining per-partition ordering semantics.
   * Support for parallel data load into Hadoop.
+<<<<<<< HEAD
  .
  This package includes common Kafka .jar files.
 
@@ -100,3 +111,6 @@ Description: Apache Kafka is a distributed publish-subscribe messaging system
   * Support for parallel data load into Hadoop.
  .
  This package includes init.d script and default file for a Kafka MirrorMaker.
+=======
+
+>>>>>>> 918be683... Debianize Kafka
