@@ -1,0 +1,181 @@
+#!/bin/sh
+
+# kafka
+# Wrapper script for Kafka executable classes.
+# This script is a single replacement for the
+# shell scripts shipped with Kafka source in $KAFKA_HOME/bin.
+# This script sources /etc/default/kafka installed by this
+# .deb package in order to determine proper CLASSPATH.
+#
+
+SCRIPT_NAME=$(basename "$0")
+KAFKA_CONFIG=${KAFKA_CONFIG:-/etc/kafka}
+
+USAGE="Usage:
+
+$SCRIPT_NAME <command> [opts]
+Run $SCRIPT_NAME <command> with zero arguments/options to see command usage.
+
+Commands:
+  $SCRIPT_NAME server-start              <server.properties> (Default: $KAFKA_CONFIG/server.properties)
+  $SCRIPT_NAME server-stop
+  $SCRIPT_NAME console-producer          [opts]
+  $SCRIPT_NAME console-consumer          [opts]
+  $SCRIPT_NAME producer-shell            [opts]
+  $SCRIPT_NAME producer-perf-test        [opts]
+  $SCRIPT_NAME replay-log-producer       [opts]
+  $SCRIPT_NAME simple-consumer-shell     [opts]
+  $SCRIPT_NAME simple-consumer-perf-test [opts]
+  $SCRIPT_NAME zookeeper-start           <zookeeper.properties> (Default: $KAFKA_CONFIG/zookeeper.properties)
+  $SCRIPT_NAME zookeeper-stop
+  $SCRIPT_NAME zookeeper-shell           [opts]
+
+Environment Variables:
+  KAFKA_CONFIG - location of Kafka config files.  Default: /etc/kafka
+"
+
+usage() { echo "${USAGE}"; }
+
+
+# Builds CLASSPATH and execs $1 as a java class.
+kafka_run_class() {
+    if [ $# -lt 1 ]; then
+      echo "USAGE: $0 classname [opts]"
+      exit 1
+    fi
+
+    # source /etc/default/kafka to get proper CLASSPATH
+    # and other env variables.
+    test -f /etc/default/kafka && . /etc/default/kafka
+
+    # if these were not yet set (by user or defaults file),
+    # then go ahead and set them.
+    if [ -z "$KAFKA_JMX_OPTS" ]; then
+        KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false  -Dcom.sun.management.jmxremote.ssl=false "
+    fi
+    if [ -n "$JMX_PORT" ]; then
+        KAFKA_JMX_OPTS="$KAFKA_JMX_OPTS -Dcom.sun.management.jmxremote.port=$JMX_PORT "
+    fi
+
+    if [ -z "$KAFKA_OPTS" ]; then
+        KAFKA_OPTS="-Xmx512M -server  -Dlog4j.configuration=file:$KAFKA_CONFIG/log4j.properties"
+    fi
+
+    if [ -z "$JAVA_HOME" ]; then
+        JAVA="java"
+    else
+        JAVA="$JAVA_HOME/bin/java"
+    fi
+
+    # echo $JAVA $KAFKA_OPTS $KAFKA_JMX_OPTS -cp $CLASSPATH $@
+    $JAVA $KAFKA_OPTS $KAFKA_JMX_OPTS -cp $CLASSPATH $@
+}
+
+
+cmd_server_start() {
+    # default server.properties to $KAFKA_CONFIG/server.properties
+    server_properties=${1:-${KAFKA_CONFIG}/server.properties}
+
+    export JMX_PORT=${JMX_PORT:-9999}
+    kafka_run_class kafka.Kafka "${server_properties}"
+}
+
+cmd_server_stop() {
+    ps ax | grep -i 'kafka.Kafka' | grep -v grep | awk '{print $1}' | xargs kill -SIGINT
+}
+
+cmd_zookeeper_start() {
+    # default zookeeper.properties to $KAFKA_CONFIG/zookeeper.properties
+    export JMX_PORT=${JMX_PORT:-9998}
+    zookeeper_properties=${1:-${KAFKA_CONFIG}/zookeeper.properties}
+    kafka_run_class org.apache.zookeeper.server.quorum.QuorumPeerMain ${zookeeper_properties}
+}
+
+cmd_zookeeper_stop() {
+    ps ax | grep -i 'zookeeper' | grep -v grep | awk '{print $1}' | xargs kill -SIGINT
+}
+
+cmd_console_consumer() {
+    export KAFKA_OPTS="-Xmx512M -server -Dcom.sun.management.jmxremote -Dlog4j.configuration=file:${KAFKA_CONFIG}/kafka-console-consumer-log4j.properties"
+    kafka_run_class kafka.consumer.ConsoleConsumer $@
+}
+
+cmd_console_producer() {
+    export JMX_PORT=${JMX_PORT:-9990}
+    kafka_run_class kafka.producer.ConsoleProducer $@
+}
+
+cmd_consumer_shell() {
+    kafka_run_class kafka.tools.ConsumerShell $@
+}
+
+cmd_producer_shell() {
+    export JMX_PORT=${JMX_PORT:-9991}
+    kafka_run_class kafka.tools.ProducerShell $@
+}
+
+cmd_simple_consumer_shell() {
+    kafka_run_class kafka.tools.SimpleConsumerShell $@
+}
+
+cmd_consumer_perf_test() {
+    kafka_run_class kafka.perf.ConsumerPerformance $@
+}
+
+cmd_producer_perf_test() {
+    kafka_run_class kafka.perf.ProducerPerformance $@
+}
+
+cmd_simple_consumer_perf_test() {
+    kafka_run_class kafka.tools.SimpleConsumerPerformance $@
+}
+
+cmd_replay_log_producer() {
+    export JMX_PORT=${JMX_PORT:-9992}
+    export KAFKA_OPTS="-Xmx512M -server -Dcom.sun.management.jmxremote -Dlog4j.configuration=file:${KAFKA_CONFIG}/log4j.properties"
+    kafka-run-class kafka.tools.ReplayLogProducer $@
+}
+
+cmd_zookeeper_shell() {
+    if [ $# -ne 1 ];
+    then
+        echo "USAGE: ${SCRIPT_NAME} zookeeper-shell zookeeper_host:port[/path]"
+        exit 1
+    fi
+
+    kafka-run-class org.apache.zookeeper.ZooKeeperMain -server $1
+}
+
+
+
+
+
+# if no commands, print usage.
+if [ $# -lt 1 ]; then
+    usage && exit 0
+fi
+
+# parse cli args
+while test $# != 0
+do
+    case "$1" in
+    server-start | server-stop | zookeeper-start | zookeeper-stop | console-consumer | console-producer | consumer-shell | producer-shell | simple-consumer-shell )
+        command="$1"; shift; break;
+        shift;
+        break;
+        ;;
+    -h|--help)
+        usage
+        exit 0
+        ;;
+    *)
+        echo "Invalid command : '$1'. Aborting." >&2
+        exit 1
+        ;;
+    esac
+done
+
+# convert dashes to underscores
+function_name=$(echo "${command}" | tr - _)
+# call the command function
+"cmd_$function_name" "$@"
