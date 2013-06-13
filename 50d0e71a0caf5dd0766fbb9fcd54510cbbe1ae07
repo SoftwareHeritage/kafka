@@ -1,0 +1,8 @@
+Verified+2: Diederik <dvanliere@wikimedia.org>
+Code-Review+1: Faidon <faidon@wikimedia.org>
+Code-Review+2: Akosiaris <akosiaris@wikimedia.org>
+Submitted-by: Diederik <dvanliere@wikimedia.org>
+Submitted-at: Thu, 13 Jun 2013 13:32:42 +0000
+Reviewed-on: https://gerrit.wikimedia.org/r/68026
+Project: operations/debs/kafka
+Branch: refs/heads/debian
