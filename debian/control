@@ -50,3 +50,12 @@ Description: Apache Kafka is a distributed publish-subscribe messaging system
   maintaining per-partition ordering semantics.
   * Support for parallel data load into Hadoop.
 
+Package: kafka-mirror
+Architecture: all
+Depends: default-jre, scala-library, adduser, ${java:Depends}, ${misc:Depends}, kafka
+Recommends: ${java:Recommends}
+Description: Init scripts for Apache Kafka MirrorMaker.
+ Apache Kafka's MirrorMaker tool makes it possible to maintain a
+ replica of an existing Kafka cluster.  This is useful for
+ inter-datacenter replication.  See:
+ https://cwiki.apache.org/confluence/display/KAFKA/Kafka+mirroring+%28MirrorMaker%29

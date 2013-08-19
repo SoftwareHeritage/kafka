@@ -1,0 +1,2 @@
+config/consumer.properties etc/kafka/mirror
+config/producer.properties etc/kafka/mirror
