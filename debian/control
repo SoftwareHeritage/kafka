@@ -49,4 +49,3 @@ Description: Apache Kafka is a distributed publish-subscribe messaging system
   distributing consumption over a cluster of consumer machines while
   maintaining per-partition ordering semantics.
   * Support for parallel data load into Hadoop.
-
