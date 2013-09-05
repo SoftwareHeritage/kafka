@@ -3,6 +3,7 @@ Section: misc
 Priority: optional
 Maintainer: Alexandros Kosiaris <akosiaris@wikimedia.org>
 Build-Depends: debhelper (>= 9), default-jdk, javahelper (>= 0.40),
+ scala,
  junit4,
  velocity,
  libasm3-java,
