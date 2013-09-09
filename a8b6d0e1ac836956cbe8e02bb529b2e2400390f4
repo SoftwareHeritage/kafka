@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4946a543_f33d7f8c",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2013-09-09T14:01:24Z",
+      "side": 1,
+      "message": "If anybody knows a better way to check for a substring in a variable in a compound conditional in sh, please let me know!  Shelling out to grep for this seems a little silly.",
+      "revId": "a8b6d0e1ac836956cbe8e02bb529b2e2400390f4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    }
+  ]
+}
