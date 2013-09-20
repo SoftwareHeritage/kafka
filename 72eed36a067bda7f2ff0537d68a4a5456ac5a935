@@ -16,6 +16,24 @@
       "revId": "72eed36a067bda7f2ff0537d68a4a5456ac5a935",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4946a543_8d7f81a7",
+        "filename": "debian/patches/our-own-build-system.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2013-09-20T18:31:22Z",
+      "side": 1,
+      "message": "You are right... i don\u0027t like it either. I think this could work however:\n\n$(INSTALL) -o root -g root -T consumer.properties $(DESTDIR)/$(SYSCONFDIR)/mirror/consumer.properties.example\n\nand the same for producer.properties.\n\nIt is ugly though. I will try some Makefile target expansion and let you know",
+      "parentUuid": "4946a543_aa4d03c6",
+      "revId": "72eed36a067bda7f2ff0537d68a4a5456ac5a935",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
     }
   ]
 }
