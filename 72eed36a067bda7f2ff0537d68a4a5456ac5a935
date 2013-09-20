@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4946a543_aa4d03c6",
+        "filename": "debian/patches/our-own-build-system.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2013-09-20T15:36:15Z",
+      "side": 1,
+      "message": "Alex, I don\u0027t like this much, and betcha you won\u0027t either.  What should I do here?  How can I install these files as different names than they are shipped as.\n\nAlternatively, I could just leave them out of the package altogether, and let users figure out how to write their own mirror .properties files, rather than providing starting examples.",
+      "revId": "72eed36a067bda7f2ff0537d68a4a5456ac5a935",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    }
+  ]
+}
