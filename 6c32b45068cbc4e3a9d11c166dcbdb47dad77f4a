@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4946a543_2e868017",
+        "filename": "debian/patches/our-own-build-system.patch",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2013-09-21T17:18:43Z",
+      "side": 1,
+      "message": "Hm, interesting!\n\nQuick note, you were using tab indentation elsewhere, should probably here too?",
+      "revId": "6c32b45068cbc4e3a9d11c166dcbdb47dad77f4a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    }
+  ]
+}
