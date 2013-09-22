@@ -16,6 +16,24 @@
       "revId": "6c32b45068cbc4e3a9d11c166dcbdb47dad77f4a",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4946a543_64ad07eb",
+        "filename": "debian/patches/our-own-build-system.patch",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2013-09-22T00:38:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4946a543_2e868017",
+      "revId": "6c32b45068cbc4e3a9d11c166dcbdb47dad77f4a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
     }
   ]
 }
