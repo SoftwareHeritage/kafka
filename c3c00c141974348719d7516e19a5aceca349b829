@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e93679c6_0f5d8945",
+        "filename": "debian/gbp.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2013-10-20T23:32:34Z",
+      "side": 1,
+      "message": "It is really quite annoying to not have export-dir set, as it will put .debs in whatever the parent directory is, and who knows what that is going to be.\n\nFaidon usually just sets export-dir to ~/build-area, which will work in most cases, as usually the user\u0027s homedir exists, and git-buildpackage will create the directory as long as its parent directory exists.\n\nCan we do that instead?",
+      "revId": "c3c00c141974348719d7516e19a5aceca349b829",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    }
+  ]
+}
