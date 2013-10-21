@@ -34,6 +34,24 @@
       "revId": "c3c00c141974348719d7516e19a5aceca349b829",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "291c1151_2cca5770",
+        "filename": "debian/gbp.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2013-10-21T20:10:37Z",
+      "side": 1,
+      "message": "Oh interesting, ok that makes sense.",
+      "parentUuid": "291c1151_c60a847a",
+      "revId": "c3c00c141974348719d7516e19a5aceca349b829",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
     }
   ]
 }
