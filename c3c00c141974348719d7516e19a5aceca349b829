@@ -16,6 +16,24 @@
       "revId": "c3c00c141974348719d7516e19a5aceca349b829",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "291c1151_c60a847a",
+        "filename": "debian/gbp.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 24
+      },
+      "writtenOn": "2013-10-21T18:53:35Z",
+      "side": 1,
+      "message": "I guess that should be a user preference and thus land in ~/.gbp.conf. This way you will get it set for any package. I mentioned that tip in the commit message.\n\nAs an example, I have everything under a /packages dir with each package in its own subdir and all tarballs in /packages/tarball.",
+      "parentUuid": "e93679c6_0f5d8945",
+      "revId": "c3c00c141974348719d7516e19a5aceca349b829",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
     }
   ]
 }
