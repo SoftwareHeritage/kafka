@@ -18,3 +18,4 @@ ext/metrics-ganglia-2.2.0.jar usr/share/java
 ext/metrics-graphite-2.2.0.jar usr/share/java
 ext/kafka-ganglia-1.0.0.jar usr/share/kafka
 debian/bin/kafka usr/sbin
+debian/kafka.limits.conf etc/security/limits.d
