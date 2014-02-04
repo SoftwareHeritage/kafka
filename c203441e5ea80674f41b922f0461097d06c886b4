@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ef7ef47_185a8ff6",
+        "filename": "debian/kafka.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-02-04T18:33:25Z",
+      "side": 1,
+      "message": "This will not work. start-stop-daemon does not go through PAM.",
+      "revId": "c203441e5ea80674f41b922f0461097d06c886b4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ef7ef47_75ebde77",
+        "filename": "debian/kafka.init",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-02-04T18:33:25Z",
+      "side": 1,
+      "message": "comment ending with !a ?",
+      "revId": "c203441e5ea80674f41b922f0461097d06c886b4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ef7ef47_98657fad",
+        "filename": "debian/kafka.install",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-02-04T18:33:25Z",
+      "side": 1,
+      "message": "This will not work. start-stop-daemon does not go through PAM (and no pam_limits so no parsing of this file",
+      "revId": "c203441e5ea80674f41b922f0461097d06c886b4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    }
+  ]
+}
