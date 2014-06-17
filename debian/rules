@@ -14,7 +14,7 @@ export CLASSPATH=/usr/share/java/asm3.jar:/usr/share/java/cglib.jar:/usr/share/j
 override_dh_installinit:
 	# call regular dh_installinit to get
 	# kafka.init and kafka.default installed.
-	dh_installinit
+	dh_installinit --no-start
 
 	# also install kafka-mirror init.d and default scripts
-	dh_installinit --name=kafka-mirror
+	dh_installinit --name=kafka-mirror --no-start
