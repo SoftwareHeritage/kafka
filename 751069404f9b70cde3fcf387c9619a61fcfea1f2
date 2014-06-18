@@ -1,0 +1,7 @@
+Verified+2: jenkins-bot
+Code-Review+2: Alexandros Kosiaris <akosiaris@wikimedia.org>
+Submitted-by: Ottomata <otto@wikimedia.org>
+Submitted-at: Wed, 18 Jun 2014 14:06:47 +0000
+Reviewed-on: https://gerrit.wikimedia.org/r/140206
+Project: operations/debs/kafka
+Branch: refs/heads/debian
