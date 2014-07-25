@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e28a382_11844ab3",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-25T14:59:19Z",
+      "side": 1,
+      "message": "We try to use the default debian/ubuntu shell versus depending on bash",
+      "revId": "95febc76d68bea5b69c6794ada09ea347c06d6ef",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_11ab2a1b",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-25T14:59:19Z",
+      "side": 1,
+      "message": "sigh.. good catch, thanks",
+      "revId": "95febc76d68bea5b69c6794ada09ea347c06d6ef",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_91bf1a5c",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-25T14:59:19Z",
+      "side": 1,
+      "message": "Arrays are a bashism unfortunately and not supported in dash",
+      "revId": "95febc76d68bea5b69c6794ada09ea347c06d6ef",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_71b02e89",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-25T14:59:19Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "95febc76d68bea5b69c6794ada09ea347c06d6ef",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_31ae262c",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-25T14:59:19Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "95febc76d68bea5b69c6794ada09ea347c06d6ef",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_f1a3fe3d",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-25T14:59:19Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "95febc76d68bea5b69c6794ada09ea347c06d6ef",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_d1a00234",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-25T14:59:19Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "95febc76d68bea5b69c6794ada09ea347c06d6ef",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_916efafc",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-25T14:59:19Z",
+      "side": 1,
+      "message": "and I am repeating myself too much",
+      "revId": "95febc76d68bea5b69c6794ada09ea347c06d6ef",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    }
+  ]
+}
