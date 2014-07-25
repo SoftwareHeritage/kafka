@@ -1,0 +1,7 @@
+Code-Review+2: Alexandros Kosiaris <akosiaris@wikimedia.org>
+Verified+2: Alexandros Kosiaris <akosiaris@wikimedia.org>
+Submitted-by: Alexandros Kosiaris <akosiaris@wikimedia.org>
+Submitted-at: Fri, 25 Jul 2014 14:39:43 +0000
+Reviewed-on: https://gerrit.wikimedia.org/r/148219
+Project: operations/debs/kafka
+Branch: refs/heads/debian
