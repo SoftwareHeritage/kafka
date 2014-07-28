@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e28a382_0542b23e",
+        "filename": "debian/changelog",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-28T17:41:48Z",
+      "side": 1,
+      "message": "I see we haven\u0027t deployed 0.8.1.1 anywhere, right ? So it is ok to keep the same version number. Otherwise a debian revision bump (to 0.8.1.1-2) would be needed",
+      "revId": "c910eecbbdc9e9a5cd0071080b8cd220bc3c1068",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_c5770a9a",
+        "filename": "debian/control",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-28T17:41:48Z",
+      "side": 1,
+      "message": "It is customary for these lines (the ones differentiating similar packages) to be the last",
+      "revId": "c910eecbbdc9e9a5cd0071080b8cd220bc3c1068",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_a5687eb8",
+        "filename": "debian/control",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-28T17:41:48Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "c910eecbbdc9e9a5cd0071080b8cd220bc3c1068",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_856d82c9",
+        "filename": "debian/control",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2014-07-28T17:41:48Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "c910eecbbdc9e9a5cd0071080b8cd220bc3c1068",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    }
+  ]
+}
