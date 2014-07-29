@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e28a382_ad550428",
+        "filename": "debian/changelog",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2014-07-29T13:11:33Z",
+      "side": 1,
+      "message": "Ja hasn\u0027t been deployed anywhere, which is why I left it.",
+      "parentUuid": "8e28a382_0542b23e",
+      "revId": "c910eecbbdc9e9a5cd0071080b8cd220bc3c1068",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e28a382_c5770a9a",
         "filename": "debian/control",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-07-28T17:41:48Z",
       "side": 1,
       "message": "It is customary for these lines (the ones differentiating similar packages) to be the last",
+      "revId": "c910eecbbdc9e9a5cd0071080b8cd220bc3c1068",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_cd3730fb",
+        "filename": "debian/control",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2014-07-29T13:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e28a382_c5770a9a",
       "revId": "c910eecbbdc9e9a5cd0071080b8cd220bc3c1068",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8e28a382_ad3ce4df",
+        "filename": "debian/control",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2014-07-29T13:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e28a382_a5687eb8",
+      "revId": "c910eecbbdc9e9a5cd0071080b8cd220bc3c1068",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e28a382_856d82c9",
         "filename": "debian/control",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2014-07-28T17:41:48Z",
       "side": 1,
       "message": "same here",
+      "revId": "c910eecbbdc9e9a5cd0071080b8cd220bc3c1068",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e28a382_8d3da8dc",
+        "filename": "debian/control",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2014-07-29T13:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e28a382_856d82c9",
       "revId": "c910eecbbdc9e9a5cd0071080b8cd220bc3c1068",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
