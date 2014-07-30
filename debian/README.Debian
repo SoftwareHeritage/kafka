@@ -45,8 +45,8 @@ precise pangolin here)
 
 <GIT_TAG> should be a valid git tag. You can get them via git tag
 
-* Merge the debian branch on you new branch
-  $ git merge debian
+* Merge the debian branch onto your new branch
+  $ git merge master
 
 * Build
   $ DIST=precise git-buildpackage -us -uc --git-builder="git-pbuilder" \
