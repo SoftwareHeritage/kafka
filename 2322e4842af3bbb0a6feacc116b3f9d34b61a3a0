@@ -1,0 +1,9 @@
+Code-Review+2: Ottomata <otto@wikimedia.org>
+Verified+2: Ottomata <otto@wikimedia.org>
+Code-Review+1: Nemo bis <federicoleva@tiscali.it>
+Code-Review+1: Plucas <plucas@yelp.com>
+Submitted-by: Ottomata <otto@wikimedia.org>
+Submitted-at: Wed, 11 Feb 2015 16:05:59 +0000
+Reviewed-on: https://gerrit.wikimedia.org/r/187648
+Project: operations/debs/kafka
+Branch: refs/heads/master
