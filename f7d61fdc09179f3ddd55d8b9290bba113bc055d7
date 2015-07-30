@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ec42329_05bad21e",
+        "filename": "debian/changelog",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2483
+      },
+      "writtenOn": "2015-07-30T14:58:20Z",
+      "side": 1,
+      "message": "This should be jessie-wikimedia, since it\u0027s a local package and not from the Debian archive.",
+      "revId": "f7d61fdc09179f3ddd55d8b9290bba113bc055d7",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    }
+  ]
+}
