@@ -1,4 +1,4 @@
-From: Alexandros Kosiaris <akosiaris@wikimedia.org>
+From: Alexandros Kosiaris <akosiaris@wikimedia.org>, Andrew Otto <otto@wikimedia.org>
 Date: Tue, 28 May 2013 17:46:15 +0000
 Subject: Introducing our own build system
 
@@ -14,28 +14,28 @@ sane defaults are discovered but they should not be relied on too much.
 The version discovery system is rather naive and will fail in many
 cases to correctly identify the version. Since this is not trivial to
 fix we allow the caller to override version.
+
+Updated for 0.8.2.1 on 2015-07-28 by Andrew Otto.
 ---
- Makefile                         |   66 ++++++++++++++++++++++++++++++++++++++
- config/Makefile                  |    9 ++++++
- contrib/Makefile                 |   23 +++++++++++++
- contrib/hadoop-consumer/Makefile |   20 ++++++++++++
- contrib/hadoop-producer/Makefile |   20 ++++++++++++
- core/Makefile                    |   20 ++++++++++++
- examples/Makefile                |   19 +++++++++++
- perf/Makefile                    |   20 ++++++++++++
- 8 files changed, 197 insertions(+)
+ Makefile                         | 66 ++++++++++++++++++++++++++++++++++++++++
+ clients/Makefile                 | 18 +++++++++++
+ config/Makefile                  | 15 +++++++++
+ contrib/Makefile                 | 24 +++++++++++++++
+ contrib/hadoop-consumer/Makefile | 18 +++++++++++
+ contrib/hadoop-producer/Makefile | 19 ++++++++++++
+ core/Makefile                    | 21 +++++++++++++
+ 9 files changed, 220 insertions(+)
  create mode 100644 Makefile
+ create mode 100644 clients/Makefile
  create mode 100644 config/Makefile
  create mode 100644 contrib/Makefile
  create mode 100644 contrib/hadoop-consumer/Makefile
  create mode 100644 contrib/hadoop-producer/Makefile
  create mode 100644 core/Makefile
- create mode 100644 examples/Makefile
- create mode 100644 perf/Makefile
 
 diff --git a/Makefile b/Makefile
 new file mode 100644
-index 0000000..b2a9961
+index 0000000..cf05093
 --- /dev/null
 +++ b/Makefile
 @@ -0,0 +1,66 @@
@@ -47,7 +47,7 @@ index 0000000..b2a9961
 +export INSTALL=install -D -m 644
 +
 +# Figure this out as well as other dependencies
-+export SCALA_LIBRARY=/usr/share/java/scala-library-2.9.1.jar
++export SCALA_LIBRARY=/usr/share/java/scala-library-2.9.2.jar
 +
 +# DESTDIR
 +ifndef PREFIX
@@ -83,7 +83,8 @@ index 0000000..b2a9961
 +endif
 +export CFLAGS=-usejavacp
 +
-+SUBDIRS=core examples contrib perf config
++# Don't bother building examples as part of main build process.
++SUBDIRS=clients core contrib config
 +
 +BUILDDIRS=$(SUBDIRS:%=build-%)
 +CLEANDIRS=$(SUBDIRS:%=clean-%)
@@ -103,11 +104,34 @@ index 0000000..b2a9961
 +
 +$(INSTALLDIRS): $(TARGET_PATH)
 +	$(MAKE) -C $(@:install-%=%) install
-+
 +.PHONY: clean install all
+diff --git a/clients/Makefile b/clients/Makefile
+new file mode 100644
+index 0000000..3c0f6bd
+--- /dev/null
++++ b/clients/Makefile
+@@ -0,0 +1,18 @@
++SOURCES=$(shell find src/main -name "*.java")
++
++TARGET_PATH=$(CURDIR)/target
++CLASSPATH:=$(CLASSPATH):$(TARGET_PATH)
++
++$(TARGET_PATH):
++	$(MKDIR_P) $(TARGET_PATH)
++
++all:	$(SOURCES) $(TARGET_PATH)
++	$(JAVAC) -d $(TARGET_PATH) $(SOURCES)
++
++clean:
++	$(RM_RF) $(TARGET_PATH)
++	$(RM_RF) kafka-clients-$(VERSION).jar
++
++install:	all
++	$(JAR) cfv kafka-clients-$(VERSION).jar -C target .
++	$(INSTALL) -o root -g root kafka-clients-$(VERSION).jar $(DESTDIR)$(LIBPATH)/kafka-clients-$(VERSION).jar
 diff --git a/config/Makefile b/config/Makefile
 new file mode 100644
-index 0000000..211f667
+index 0000000..f78a68d
 --- /dev/null
 +++ b/config/Makefile
 @@ -0,0 +1,15 @@
@@ -128,16 +152,17 @@ index 0000000..211f667
 +	$(INSTALL) -T -o root -g root $< $(DESTDIR)/$(SYSCONFDIR)/mirror/$@
 diff --git a/contrib/Makefile b/contrib/Makefile
 new file mode 100644
-index 0000000..c214ca3
+index 0000000..1db7722
 --- /dev/null
 +++ b/contrib/Makefile
-@@ -0,0 +1,23 @@
+@@ -0,0 +1,24 @@
 +SUBDIRS=hadoop-consumer hadoop-producer
 +BUILDDIRS=$(SUBDIRS:%=build-%)
 +CLEANDIRS=$(SUBDIRS:%=clean-%)
 +INSTALLDIRS=$(SUBDIRS:%=install-%)
 +
 +export CORE_TARGET_PATH=$(dir $(CURDIR))core/target
++export CLIENTS_TARGET_PATH=$(dir $(CURDIR))clients/target
 +
 +.PHONY: all install clean
 +
@@ -157,15 +182,14 @@ index 0000000..c214ca3
 +
 diff --git a/contrib/hadoop-consumer/Makefile b/contrib/hadoop-consumer/Makefile
 new file mode 100644
-index 0000000..b13c8c7
+index 0000000..e2e3e93
 --- /dev/null
 +++ b/contrib/hadoop-consumer/Makefile
-@@ -0,0 +1,20 @@
+@@ -0,0 +1,18 @@
 +SOURCES=$(shell find -name "*.java")
 +
-+LIB_CLASSJARS:=$(shell find lib -name "*.jar")
 +TARGET_PATH=$(CURDIR)/target
-+CLASSPATH:=$(CLASSPATH):$(SCALA_LIBRARY):$(LIB_CLASSJARS):$(CORE_TARGET_PATH)
++CLASSPATH:=$(CLASSPATH):$(SCALA_LIBRARY):$(CLIENTS_TARGET_PATH):$(CORE_TARGET_PATH)
 +
 +$(TARGET_PATH):
 +	$(MKDIR_P) $(TARGET_PATH)
@@ -180,18 +204,16 @@ index 0000000..b13c8c7
 +install:	all
 +	$(JAR) cfv hadoop-consumer-$(VERSION).jar -C target .
 +	$(INSTALL) -o root -g root hadoop-consumer-$(VERSION).jar $(DESTDIR)$(LIBPATH)/hadoop-consumer-$(VERSION).jar
-+
 diff --git a/contrib/hadoop-producer/Makefile b/contrib/hadoop-producer/Makefile
 new file mode 100644
-index 0000000..0e9b2ae
+index 0000000..3c5d123
 --- /dev/null
 +++ b/contrib/hadoop-producer/Makefile
-@@ -0,0 +1,20 @@
+@@ -0,0 +1,19 @@
 +SOURCES=$(shell find -name "*.java")
 +
-+LIB_CLASSJARS:=$(shell find lib -name "*.jar")
 +TARGET_PATH=$(CURDIR)/target
-+CLASSPATH:=$(CLASSPATH):$(SCALA_LIBRARY):$(LIB_CLASSJARS):$(CORE_TARGET_PATH)
++CLASSPATH:=$(CLASSPATH):$(SCALA_LIBRARY):$(CLIENTS_TARGET_PATH):$(CORE_TARGET_PATH)
 +
 +$(TARGET_PATH):
 +	$(MKDIR_P) $(TARGET_PATH)
@@ -209,15 +231,16 @@ index 0000000..0e9b2ae
 +
 diff --git a/core/Makefile b/core/Makefile
 new file mode 100644
-index 0000000..7441725
+index 0000000..2c107e2
 --- /dev/null
 +++ b/core/Makefile
-@@ -0,0 +1,20 @@
+@@ -0,0 +1,21 @@
 +SOURCES=$(shell find src/main -name "*.scala" -or -name "*.java")
 +JAVA_SOURCES=$(shell find src/main -name "*.java")
 +
 +TARGET_PATH=$(CURDIR)/target
-+CLASSPATH:=$(CLASSPATH):$(TARGET_PATH)
++CLIENTS_TARGET_PATH=$(dir $(CURDIR))clients/target
++CLASSPATH:=$(CLASSPATH):$(CLIENTS_TARGET_PATH):$(TARGET_PATH)
 +
 +$(TARGET_PATH):
 +	$(MKDIR_P) $(TARGET_PATH)
@@ -233,55 +256,4 @@ index 0000000..7441725
 +install:
 +	$(JAR) cfv kafka-$(VERSION).jar -C target .
 +	$(INSTALL) -o root -g root kafka-$(VERSION).jar $(DESTDIR)$(LIBPATH)/kafka-$(VERSION).jar
-diff --git a/examples/Makefile b/examples/Makefile
-new file mode 100644
-index 0000000..8d5e751
---- /dev/null
-+++ b/examples/Makefile
-@@ -0,0 +1,19 @@
-+SOURCES=$(shell find -name "*.java")
-+
-+TARGET_PATH=$(CURDIR)/target
-+CORE_TARGET_PATH=$(dir $(CURDIR))core/target
-+CLASSPATH:=$(CLASSPATH):$(SCALA_LIBRARY):$(CORE_TARGET_PATH)
-+
-+$(TARGET_PATH):
-+	$(MKDIR_P) $(TARGET_PATH)
-+
-+all:	$(SOURCES) $(TARGET_PATH)
-+	$(JAVAC) -d $(TARGET_PATH) $(SOURCES)
-+
-+clean:
-+	$(RM_RF) $(TARGET_PATH)
-+	$(RM_RF) kafka-java-examples-$(VERSION).jar
-+
-+install:	all
-+	$(JAR) cfv kafka-java-examples-$(VERSION).jar -C target .
-+	$(INSTALL) -o root -g root kafka-java-examples-$(VERSION).jar $(DESTDIR)$(LIBPATH)/kafka-java-examples-$(VERSION).jar
-diff --git a/perf/Makefile b/perf/Makefile
-new file mode 100644
-index 0000000..daeea0d
---- /dev/null
-+++ b/perf/Makefile
-@@ -0,0 +1,20 @@
-+SOURCES=$(shell find -name "*.scala" -or -name "*.java")
-+
-+TARGET_PATH=$(CURDIR)/target
-+
-+CORE_TARGET_PATH=$(dir $(CURDIR))core/target
-+CLASSPATH:=$(CLASSPATH):$(CORE_TARGET_PATH)
-+
-+$(TARGET_PATH):
-+	$(MKDIR_P) $(TARGET_PATH)
-+
-+all:	$(SOURCES) $(TARGET_PATH)
-+	$(SCALAC) $(CFLAGS) -d $(TARGET_PATH) $(SOURCES)
-+
-+clean:
-+	$(RM_RF) $(TARGET_PATH)
-+	$(RM_RF) kafka-perf-$(VERSION).jar
-+
-+install:	all
-+	$(JAR) cfv kafka-perf-$(VERSION).jar -C target .
-+	$(INSTALL) -o root -g root kafka-perf-$(VERSION).jar $(DESTDIR)$(LIBPATH)/kafka-perf-$(VERSION).jar
 --

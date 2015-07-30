@@ -97,7 +97,7 @@ kafka_mirror_sh() {
 	export KAFKA_CONFIG JMX_PORT KAFKA_JMX_OPTS SCALA_VERSION KAFKA_JVM_PERFORMANCE_OPTS KAFKA_HEAP_OPTS KAFKA_LOG4J_OPTS KAFKA_OPTS CLASSPATH
 
 
-	# Define the command to run kafka as a daemon
+	# Define the command to run kafka MirrorMaker as a daemon
 	# set -a tells sh to export assigned variables to spawned shells.
 	KAFKA_MIRROR_ARGS="
 --num.streams $KAFKA_MIRROR_NUM_STREAMS \
@@ -121,7 +121,7 @@ kafka_mirror_sh() {
 
 	start-stop-daemon --start -b -u "$KAFKA_USER" -g "$KAFKA_GROUP" \
 		-c "$KAFKA_USER" -m -p "$KAFKA_MIRROR_PID" \
-		-x "/usr/sbin/kafka" -- "mirror-maker" "${KAFKA_MIRROR_ARGS}"
+		-x "/usr/sbin/kafka" -- "mirror-maker" $KAFKA_MIRROR_ARGS
 	status="$?"
 	set +a -e
 	return $status

@@ -11,12 +11,21 @@
 SCRIPT_NAME=$(basename "$0")
 KAFKA_CONFIG=${KAFKA_CONFIG:-/etc/kafka}
 LOG_DIR=${LOG_DIR:-/var/log/kafka}
+SYS_CLASSDIR=${SYS_CLASSDIR:-/usr/share/java}
+KAFKA_CLASSDIR=${KAFKA_CLASSDIR:-/usr/share/kafka}
 
 # Set ZOOKEEPER_OPT if ZOOKEEPER_URL is set and --zookeeper has not
 # also been passed in as a CLI arg.  This will be included
 # in command functions that take a --zookeeper argument.
 if [ -n "${ZOOKEEPER_URL}" -a -z "$(echo $@ | grep -- --zookeeper)" ]; then
     ZOOKEEPER_OPT="--zookeeper ${ZOOKEEPER_URL}"
+fi
+
+# Set BROKER_LIST_OPT if BROKER_LIST is set and --broker-list has not
+# also been passed in as a CLI arg.  This will be included
+# in command functions that take a --broker-list argument.
+if [ -n "${BROKER_LIST}" -a -z "$(echo $@ | grep -- --broker-list)" ]; then
+    BROKER_LIST_OPT="--broker-list ${BROKER_LIST}"
 fi
 
 
@@ -36,11 +45,9 @@ Commands:
   $SCRIPT_NAME mirror-maker               [opts]
   $SCRIPT_NAME consumer-offset-checker    [opts]
 
-  $SCRIPT_NAME add-partitions             [opts]
   $SCRIPT_NAME reassign-partitions        [opts]
-  $SCRIPT_NAME check-reassignment-status  [opts]
   $SCRIPT_NAME preferred-replica-election [opts]
-  $SCRIPT_NAME controlled-shutdown        [opts]
+  $SCRIPT_NAME replica-verification-tool  [opts]
 
   $SCRIPT_NAME producer-perf-test         [opts]
   $SCRIPT_NAME consumer-perf-test         [opts]
@@ -55,6 +62,7 @@ Commands:
 
 Environment Variables:
   ZOOKEEPER_URL              - If this is set, any commands that take a --zookeeper flag will be passed with this value.
+  BROKER_LIST                - If this is set, any commands that take a --broker-list flag will be passed with this value.
   KAFKA_CONFIG               - location of Kafka config files.  Default: /etc/kafka
   JMX_PORT                   - Set this to expose JMX.  This is set by default for brokers and producers.
   KAFKA_JVM_PERFORMANCE_OPTS - Any special JVM perfomance options.  This is set by default.
@@ -76,7 +84,7 @@ kafka_run_class() {
     fi
 
     if [ -z "$SCALA_VERSION" ]; then
-        SCALA_VERSION=2.8.0
+        SCALA_VERSION=2.9.2
     fi
 
     # if these were not yet set (by user or defaults file),
@@ -90,7 +98,10 @@ kafka_run_class() {
 
     # Log4j settings
     if [ -z "$KAFKA_LOG4J_OPTS" ]; then
-      KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$KAFKA_CONFIG/tools-log4j.properties"
+        # Use tools-log4j.properties to configure loggers for CLIs.
+        # Zookeeper uses SLF4J simple logger, and is noisy by default, so make
+        # it always WARN level.
+        KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$KAFKA_CONFIG/tools-log4j.properties -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN"
     fi
 
     if [ -z "$KAFKA_OPTS" ]; then
@@ -151,7 +162,11 @@ kafka_run_class() {
     fi
 
     # Setting the classpath to all the needed dependencies.
-    CLASSPATH=$CLASSPATH:/usr/share/java/scala-library.jar:/usr/share/java/jetty.jar:/usr/share/java/jetty-util.jar:/usr/share/java/zookeeper.jar:/usr/share/java/velocity-1.7.jar:/usr/share/java/slf4j-api.jar:/usr/share/java/servlet-api-2.5.jar:/usr/share/java/jsp-api-2.1.jar:/usr/share/java/qdox.jar:/usr/share/java/paranamer.jar:/usr/share/java/oro.jar:/usr/share/java/objenesis.jar:/usr/share/java/log4j-1.2-1.2.16.jar:/usr/share/java/junit4.jar:/usr/share/java/joda-time.jar:/usr/share/java/jets3t.jar:/usr/share/java/jackson-core.jar:/usr/share/java/jackson-mapper.jar:/usr/share/java/hsqldb.jar:/usr/share/java/commons-cli.jar:/usr/share/java/commons-codec.jar:/usr/share/java/commons-collections.jar:/usr/share/java/commons-compress.jar:/usr/share/java/commons-el.jar:/usr/share/java/commons-httpclient.jar:/usr/share/java/commons-io.jar:/usr/share/java/commons-lang.jar:/usr/share/java/commons-logging.jar:/usr/share/java/commons-net.jar:/usr/share/java/cglib.jar:/usr/share/java/asm3.jar:/usr/share/java/snappy-java.jar:/usr/share/java/jasper-runtime-5.5.12.jar:/usr/share/java/jsp-api-2.1-6.1.14.jar:/usr/share/java/avro-1.4.0.jar:/usr/share/java/kfs-0.3.jar:/usr/share/java/jsp-2.1-6.1.14.jar:/usr/share/java/scalatest-1.2.jar:/usr/share/java/paranamer-ant-2.2.jar:/usr/share/java/paranamer-generator-2.2.jar:/usr/share/java/pig-0.8.0.jar:/usr/share/java/zkclient-0.3.jar:/usr/share/java/easymock-3.0.jar:/usr/share/java/jasper-compiler-5.5.12.jar:/usr/share/java/hadoop-core-0.20.2.jar:/usr/share/java/xmlenc-0.52.jar:/usr/share/java/jopt-simple-3.2.jar:/usr/share/kafka/kafka.jar:/usr/share/kafka/hadoop-consumer.jar:/usr/share/kafka/hadoop-producer.jar:/usr/share/kafka/kafka-kafka-examples.jar:/usr/share/kafka/kafka-perf.jar:/usr/share/java/metrics-annotation-2.2.0.jar:/usr/share/java/metrics-core-2.2.0.jar:/usr/share/java/metrics-ganglia-2.2.0.jar:/usr/share/java/metrics-graphite-2.2.0.jar:/usr/share/kafka/kafka-ganglia-1.0.0.jar
+    SYSTEM_JARS=$SYS_CLASSDIR/asm3.jar:$SYS_CLASSDIR/cglib.jar:$SYS_CLASSDIR/commons-cli.jar:$SYS_CLASSDIR/commons-codec.jar:$SYS_CLASSDIR/commons-compress.jar:$SYS_CLASSDIR/commons-el.jar:$SYS_CLASSDIR/commons-httpclient.jar:$SYS_CLASSDIR/commons-io.jar:$SYS_CLASSDIR/commons-lang.jar:$SYS_CLASSDIR/commons-logging.jar:$SYS_CLASSDIR/commons-net.jar:$SYS_CLASSDIR/hsqldb.jar:$SYS_CLASSDIR/jackson-core.jar:$SYS_CLASSDIR/jackson-mapper.jar:$SYS_CLASSDIR/jets3t.jar:$SYS_CLASSDIR/jetty-util.jar:$SYS_CLASSDIR/jetty.jar:$SYS_CLASSDIR/joda-time.jar:$SYS_CLASSDIR/jsp-api-2.1.jar:$SYS_CLASSDIR/junit4.jar:$SYS_CLASSDIR/log4j-1.2.jar:$SYS_CLASSDIR/objenesis.jar:$SYS_CLASSDIR/oro.jar:$SYS_CLASSDIR/qdox.jar:$SYS_CLASSDIR/scala-library.jar:$SYS_CLASSDIR/servlet-api-2.5.jar:$SYS_CLASSDIR/slf4j-api.jar:$SYS_CLASSDIR/slf4j-simple.jar:$SYS_CLASSDIR/velocity-1.7.jar:$SYS_CLASSDIR/zookeeper.jar
+    KAFKA_INCLUDED_JARS=$SYS_CLASSDIR/avro-1.4.0.jar:$SYS_CLASSDIR/commons-collections-2.1.1.jar.jar:$SYS_CLASSDIR/easymock-3.0.jar:$SYS_CLASSDIR/hadoop-core-0.20.2.jar:$SYS_CLASSDIR/jasper-compiler-5.5.12.jar:$SYS_CLASSDIR/jasper-runtime-5.5.12.jar:$SYS_CLASSDIR/jopt-simple-3.2.jar:$SYS_CLASSDIR/jsp-2.1-6.1.14.jar:$SYS_CLASSDIR/jsp-api-2.1-6.1.14.jar:$SYS_CLASSDIR/kfs-0.3.jar:$SYS_CLASSDIR/lz4-1.2.0.jar:$SYS_CLASSDIR/metrics-annotation-2.2.0.jar:$SYS_CLASSDIR/metrics-core-2.2.0.jar:$SYS_CLASSDIR/metrics-ganglia-2.2.0.jar:$SYS_CLASSDIR/metrics-graphite-2.2.0.jar:$SYS_CLASSDIR/paranamer-ant-2.2.jar:$SYS_CLASSDIR/paranamer-generator-2.2.jar:$SYS_CLASSDIR/paranamer-2.1.jar:$SYS_CLASSDIR/pig-0.8.0.jar:$SYS_CLASSDIR/piggybank-0.12.0.jar:$SYS_CLASSDIR/scalatest-1.2.jar:$SYS_CLASSDIR/snappy-java-1.0.4.1.jar:$SYS_CLASSDIR/xmlenc-0.52.jar:$SYS_CLASSDIR/zkclient-0.3.jar
+    KAFKA_JARS=$KAFKA_CLASSDIR/hadoop-consumer.jar:$KAFKA_CLASSDIR/hadoop-producer.jar:$KAFKA_CLASSDIR/kafka-clients.jar:$KAFKA_CLASSDIR/kafka-ganglia-1.0.0.jar:$KAFKA_CLASSDIR/kafka.jar
+
+    CLASSPATH=$CLASSPATH:$SYSTEM_JARS:$KAFKA_INCLUDED_JARS:$KAFKA_JARS
 
     # Launch mode
     if [ "x$DAEMON_MODE" = "xtrue" ]; then
@@ -168,30 +183,30 @@ cmd_topic() {
 cmd_console_producer() {
     export JMX_PORT="${JMX_PORT:-9990}"
     export KAFKA_HEAP_OPTS="${KAFKA_HEAP_OPTS:--Xmx512M}"
-    kafka_run_class kafka.producer.ConsoleProducer "$@"
+    kafka_run_class kafka.tools.ConsoleProducer $BROKER_LIST_OPT "$@"
 }
 
 cmd_console_consumer() {
     export KAFKA_HEAP_OPTS="${KAFKA_HEAP_OPTS:--Xmx512M}"
-    kafka_run_class kafka.consumer.ConsoleConsumer $ZOOKEEPER_OPT "$@"
-}
-
-cmd_consumer_shell() {
-    kafka_run_class kafka.tools.ConsumerShell $ZOOKEEPER_OPT "$@"
-}
-
-cmd_producer_shell() {
-    export JMX_PORT="${JMX_PORT:-9991}"
-    kafka_run_class kafka.tools.ProducerShell "$@"
+    kafka_run_class kafka.tools.ConsoleConsumer $ZOOKEEPER_OPT "$@"
 }
 
 cmd_simple_consumer_shell() {
-    kafka_run_class kafka.tools.SimpleConsumerShell $ZOOKEEPER_OPT "$@"
+    kafka_run_class kafka.tools.SimpleConsumerShell $BROKER_LIST_OPT "$@"
+}
+
+cmd_consumer_offset_checker() {
+    kafka_run_class kafka.tools.ConsumerOffsetChecker $ZOOKEEPER_OPT "$@"
 }
 
 cmd_replay_log_producer() {
     export JMX_PORT="${JMX_PORT:-9992}"
-    kafka_run_class kafka.tools.ReplayLogProducer $ZOOKEEPER_OPT "$@"
+    kafka_run_class kafka.tools.ReplayLogProducer $BROKER_LIST_OPT $ZOOKEEPER_OPT "$@"
+}
+
+cmd_replica_verification_tool() {
+    export JMX_PORT="${JMX_PORT:-9992}"
+    kafka_run_class kafka.tools.ReplicaVerificationTool $BROKER_LIST_OPT "$@"
 }
 
 cmd_mirror_maker() {
@@ -217,39 +232,21 @@ cmd_consumer_offset_checker() {
     kafka_run_class kafka.tools.ConsumerOffsetChecker $ZOOKEEPER_OPT "$@"
 }
 
-cmd_add_partitions() {
-    kafka_run_class kafka.admin.AddPartitionsCommand $ZOOKEEPER_OPT "$@"
-}
-
 cmd_reassign_partitions() {
-    kafka_run_class kafka.admin.ReassignPartitionsCommand $ZOOKEEPER_OPT "$@"
-}
-
-cmd_check_reassignment_status() {
-    kafka_run_class kafka.admin.CheckReassignmentStatus $ZOOKEEPER_OPT "$@"
+    kafka_run_class kafka.admin.ReassignPartitionsCommand $BROKER_LIST_OPT $ZOOKEEPER_OPT "$@"
 }
 
 cmd_preferred_replica_election() {
     kafka_run_class kafka.admin.PreferredReplicaLeaderElectionCommand $ZOOKEEPER_OPT "$@"
 }
 
-cmd_controlled_shutdown() {
-    kafka_run_class kafka.admin.ShutdownBroker $ZOOKEEPER_OPT "$@"
-}
-
-
 cmd_producer_perf_test() {
     export KAFKA_HEAP_OPTS="${KAFKA_HEAP_OPTS:-"-Xmx512M"}"
-    kafka_run_class kafka.perf.ProducerPerformance "$@"
+    kafka_run_class kafka.tools.ProducerPerformance $BROKER_LIST_OPT "$@"
 }
 cmd_consumer_perf_test() {
     export KAFKA_HEAP_OPTS="${KAFKA_HEAP_OPTS:-"-Xmx512M"}"
-    kafka_run_class kafka.perf.ConsumerPerformance $ZOOKEEPER_OPT "$@"
-}
-
-cmd_simple_consumer_perf_test() {
-    export KAFKA_HEAP_OPTS="${KAFKA_HEAP_OPTS:-"-Xmx512M"}"
-    kafka_run_class kafka.tools.SimpleConsumerPerformance $ZOOKEEPER_OPT "$@"
+    kafka_run_class kafka.tools.ConsumerPerformance $ZOOKEEPER_OPT "$@"
 }
 
 cmd_server_start() {
@@ -276,8 +273,6 @@ cmd_server_start() {
 }
 
 cmd_server_stop() {
-    # kafka-server-stop.sh in Kafka repository uses SIGINT instead of SIGTERM
-    # here, but in testing SIGINT did not kill zookeeper.
     ps ax | grep -i 'kafka\.Kafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
 }
 
@@ -305,9 +300,7 @@ cmd_zookeeper_start() {
 }
 
 cmd_zookeeper_stop() {
-    # zookeeper-server-stop.sh in Kafka repository uses SIGINT instead of SIGTERM
-    # here, but in testing SIGINT did not kill zookeeper.
-    ps ax | grep -i 'zookeeper' | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
+    ps ax | grep -i 'zookeeper' | grep -v grep | awk '{print $1}' | xargs kill -SIGINT
 }
 
 cmd_zookeeper_shell() {
@@ -325,7 +318,7 @@ cmd_zookeeper_shell() {
         ARGS="-server ${ZOOKEEPER_URL} $@"
     fi
 
-    echo kafka_run_class org.apache.zookeeper.ZooKeeperMain $ARGS
+    kafka_run_class org.apache.zookeeper.ZooKeeperMain $ARGS
 }
 
 
@@ -347,11 +340,9 @@ do
     replay-log-producer             | \
     mirror-maker                    | \
     consumer-offset-checker         | \
-    add-partitions                  | \
     reassign-partitions             | \
-    check-reassignment-status       | \
     preferred-replica-election      | \
-    controlled-shutdown             | \
+    replica-verification-tool       | \
     producer-perf-test              | \
     consumer-perf-test              | \
     simple-consumer-perf-test       | \
