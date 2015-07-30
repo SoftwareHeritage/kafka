@@ -1,7 +1,7 @@
 kafka for Debian
 ----------------
 This package is created using a custom build system based on Makefiles
-instead of the standard sbt build system used by upstream. The reason
+instead of the standard sbt/gradle build system used by upstream. The reason
 for this is to satisfy debian policy that no internet connection should
 be required during package building as well as security concers about
 the downloaded JAR files by sbt
@@ -27,7 +27,7 @@ you from installing the dependencies manually
 * Create a cowbuilder environment (we assume you are building against
 precise pangolin here)
 
-  $ sudo DIST=precise git-pbuilder create --components "main universe"
+  $ sudo DIST=jessie git-pbuilder create --components "main universe"
 
 * Clone the repo
 
@@ -36,7 +36,7 @@ precise pangolin here)
 
 * Build
 
-  $ DIST=precise git-buildpackage -us -uc
+  $ DIST=jessie git-buildpackage -us -uc
 
 or if you dont want to use git-pbuilder:
 
@@ -68,9 +68,9 @@ commit. The best result will probably be achieved with a valid git tag
 from upstream that matches the debian upstream version specs. In that
 case <VERSION> == <commit-ish>
 
-* Then update the master branch to reflect that
+* Then update the debian branch to reflect that
 
-  $ git checkout master # Assuming you are not there already
+  $ git checkout debian # Assuming you are not there already
   $ git merge upstream/<VERSION>
 
 * Solve any potential conflicts that might arise. A very helpful way to
