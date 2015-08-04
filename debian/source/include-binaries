@@ -19,7 +19,9 @@ ext/paranamer-2.1.jar
 ext/pig-0.8.0.jar
 ext/piggybank-0.12.0.jar
 ext/scalatest-1.2.jar
-ext/snappy-java-1.0.4.1.jar
+ext/slf4j-api-1.7.6.jar
+ext/slf4j-simple-1.7.6.jar
+ext/snappy-java-1.1.1.6.jar
 ext/xmlenc-0.52.jar
 ext/zkclient-0.3.jar
 ext/kafka-ganglia-1.0.0.jar
