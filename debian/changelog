@@ -1,3 +1,14 @@
+kafka (0.8.2.1-2) jessie-wikimedia; urgency=low
+
+  * Fix for wrong snappy-java dependency, update to 1.1.1.6
+  * Include slfj4 1.7.6 dependencies to help with cross-distro builds
+  * Included dependencies are now installed in usr/share/kafka/lib/
+  * kafka cli script is now installed in usr/bin instead of usr/sbin.
+  * kafka-server now ships a systemd service unit file.  This will be
+    used on systems with systemd, rather than the init.d script.
+
+ -- Andrew Otto (WMF) <otto@wikimedia.org>  Tue, 04 Aug 2015 18:18:00 +0000
+
 kafka (0.8.2.1-1) jessie-wikimedia; urgency=low
 
   * Upstream release
