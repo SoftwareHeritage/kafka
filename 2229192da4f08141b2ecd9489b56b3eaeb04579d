@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ec42329_4f2c49f2",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-05T09:38:42Z",
+      "side": 1,
+      "message": "where does the /ext/ come from ? I would say avoid it. it is not very debian compliant.",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ec42329_8f0eb18f",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-05T09:38:42Z",
+      "side": 1,
+      "message": "why go through the if check ? the above works anyway without the if clause I am fine with s/INCLUDED/EXT/ though",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ec42329_0f7961f1",
+        "filename": "debian/changelog",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-05T09:38:42Z",
+      "side": 1,
+      "message": "jessie has /usr/share/java/snappy1.0.3-java.jar. Why do we target 1.1.1.6 ? and most importantly why do we have to maintain it ourselves ?",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ec42329_ef69751d",
+        "filename": "debian/changelog",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-05T09:38:42Z",
+      "side": 1,
+      "message": "why ? jessie has 1.7.7-1. is it not enough ? or does it cause problems ?",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ec42329_4f73e913",
+        "filename": "debian/changelog",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-05T09:38:42Z",
+      "side": 1,
+      "message": "comment about /ext/ applies here as well. Best to avoid it",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ec42329_af5fed74",
+        "filename": "debian/kafka-common.dirs",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-05T09:38:42Z",
+      "side": 1,
+      "message": "3rd time I say this in the same change (I know, that\u0027s how much I am not liking this)",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    }
+  ]
+}
