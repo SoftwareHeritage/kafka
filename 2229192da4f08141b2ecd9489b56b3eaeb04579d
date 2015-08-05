@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ec42329_1512cf58",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2015-08-05T18:47:22Z",
+      "side": 1,
+      "message": "Ha, it comes from your ext/ dirname that contains all of the dependencies.  I wanted to keep the dependencies that Kafka is manually shipping separate from /usr/share/java, as to avoid conflicts there.  Is that ok?  What would be a better name or location?",
+      "parentUuid": "8ec42329_4f2c49f2",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ec42329_8f0eb18f",
         "filename": "debian/bin/kafka",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2015-08-05T09:38:42Z",
       "side": 1,
       "message": "why go through the if check ? the above works anyway without the if clause I am fine with s/INCLUDED/EXT/ though",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ec42329_d52767af",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2015-08-05T18:47:22Z",
+      "side": 1,
+      "message": "Yeah, maybe not necessary.  I didn\u0027t like the leading \u0027:\u0027 on the CLASSPATH if $CLASSPATH wasn\u0027t set.  It was more for aesthetic reasons than functional ones.",
+      "parentUuid": "8ec42329_8f0eb18f",
       "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8ec42329_15408f34",
+        "filename": "debian/changelog",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2015-08-05T18:47:22Z",
+      "side": 1,
+      "message": "Doesn\u0027t work without a later snappy.\nhttps://issues.apache.org/jira/browse/KAFKA-1369\n\nI chose to use the version that build.gradle specified.",
+      "parentUuid": "8ec42329_0f7961f1",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ec42329_ef69751d",
         "filename": "debian/changelog",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8ec42329_757eb368",
+        "filename": "debian/changelog",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2015-08-05T18:47:22Z",
+      "side": 1,
+      "message": "1.7.7 is fine in Jessie, but I wanted to make this package more easily buildable for Precise, Trusty and Jessie.  My upgrade plan for the current Precise boxes includes upgrading them to 0.8.2.1 before they are reinstalled as Jessie, so I want 0.8.2.1 to work for precise too.  Whatever version of slf4j that was in Precise didn\u0027t work with this version of Kafka, so I just manually added the 1.7.6 version (as specified in build.gradle) to the shipped dependencies.",
+      "parentUuid": "8ec42329_ef69751d",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ec42329_4f73e913",
         "filename": "debian/changelog",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2015-08-05T09:38:42Z",
       "side": 1,
       "message": "comment about /ext/ applies here as well. Best to avoid it",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ec42329_9581df4f",
+        "filename": "debian/changelog",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2015-08-05T18:47:22Z",
+      "side": 1,
+      "message": "Aye, same response, where should I put them?",
+      "parentUuid": "8ec42329_4f73e913",
       "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
