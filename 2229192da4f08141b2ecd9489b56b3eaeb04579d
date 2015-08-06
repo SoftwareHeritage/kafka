@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8ec42329_11117c56",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-06T09:44:28Z",
+      "side": 1,
+      "message": "I \u0027d say just remove the /ext/ component and I am fine with it. That is the end result would be /usr/share/kafka/",
+      "parentUuid": "8ec42329_1512cf58",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ec42329_8f0eb18f",
         "filename": "debian/bin/kafka",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Yeah, maybe not necessary.  I didn\u0027t like the leading \u0027:\u0027 on the CLASSPATH if $CLASSPATH wasn\u0027t set.  It was more for aesthetic reasons than functional ones.",
       "parentUuid": "8ec42329_8f0eb18f",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ec42329_310cb83c",
+        "filename": "debian/bin/kafka",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-06T09:44:28Z",
+      "side": 1,
+      "message": "IIRC, I had thought about that back when I did it that way and decided on the least possible code branches back then. Honestly, if you prefer it that way I am OK. I just prefer fewer ifs if possible",
+      "parentUuid": "8ec42329_d52767af",
       "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "8ec42329_91248cae",
+        "filename": "debian/changelog",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-06T09:44:28Z",
+      "side": 1,
+      "message": "I was afraid of that. OK then. but this means we have to monitor snappy-java for security vulnerabilities ourselves",
+      "parentUuid": "8ec42329_15408f34",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ec42329_ef69751d",
         "filename": "debian/changelog",
         "patchSetId": 3
@@ -142,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "8ec42329_f1115054",
+        "filename": "debian/changelog",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-06T09:44:28Z",
+      "side": 1,
+      "message": "ok then. But this means we can undo it in 0.8.2.1-something and rely again on system provided libs on jessie, so add a TODO so we don\u0027t forget it",
+      "parentUuid": "8ec42329_757eb368",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ec42329_4f73e913",
         "filename": "debian/changelog",
         "patchSetId": 3
@@ -171,6 +243,24 @@
       "side": 1,
       "message": "Aye, same response, where should I put them?",
       "parentUuid": "8ec42329_4f73e913",
+      "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ec42329_511aa46f",
+        "filename": "debian/changelog",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-06T09:44:28Z",
+      "side": 1,
+      "message": "usr/share/kafka sounds fine to me",
+      "parentUuid": "8ec42329_9581df4f",
       "revId": "2229192da4f08141b2ecd9489b56b3eaeb04579d",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
