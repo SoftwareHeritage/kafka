@@ -16,6 +16,24 @@
       "revId": "a63cb8805fbdc80a053344d599e302e17eefa9e0",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ec42329_fd8121fd",
+        "filename": "debian/kafka-server.kafka.service",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 55
+      },
+      "writtenOn": "2015-08-06T18:03:32Z",
+      "side": 1,
+      "message": "Yes, it works just fine.  Also, I saw in some StackOverflow post somewhere someone recommended doing something like this as a way to set Env vars for a daemon.  It works because the wrapper script doesn\u0027t fork at all.  It just runs /usr/bin/java ...",
+      "parentUuid": "8ec42329_e29e5cfd",
+      "revId": "a63cb8805fbdc80a053344d599e302e17eefa9e0",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
     }
   ]
 }
