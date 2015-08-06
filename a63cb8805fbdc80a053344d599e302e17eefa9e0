@@ -34,6 +34,24 @@
       "revId": "a63cb8805fbdc80a053344d599e302e17eefa9e0",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ec42329_1d82eda8",
+        "filename": "debian/kafka-server.kafka.service",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-08-06T18:14:19Z",
+      "side": 1,
+      "message": "That is not entirely technically correct. It does fork, it\u0027s just that the parent (the shell) never resumes since the child (the java process) never returns (and is not set to run in the background). If it works though in testing, fine by me.",
+      "parentUuid": "8ec42329_fd8121fd",
+      "revId": "a63cb8805fbdc80a053344d599e302e17eefa9e0",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951",
+      "unresolved": false
     }
   ]
 }
