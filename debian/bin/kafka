@@ -42,7 +42,7 @@ Commands:
   $SCRIPT_NAME simple-consumer-shell      [opts]
   $SCRIPT_NAME replay-log-producer        [opts]
 
-  $SCRIPT_NAME mirror-maker               [opts]
+  $SCRIPT_NAME mirror-maker               [--consumer.configs <consumer.*.properties>] [opts]
   $SCRIPT_NAME consumer-offset-checker    [opts]
 
   $SCRIPT_NAME reassign-partitions        [opts]
@@ -70,6 +70,11 @@ Environment Variables:
   KAFKA_LOG4J_OPTS           - Any log4j options.  Especially -Dlog4j.configuration.  This is set by default.
   JAVA_OPTS                  - Any extra JVM options.
   KAFKA_OPTS                 - Any extra options you want to pass.
+
+Note that $SCRIPT_NAME mirror-maker takes a special --consumer.configs option.
+This option is not passed to the Java CLI.  Instead, it is shell filename
+expanded and each matching file will be given as a --consumer.config option
+to the MirrorMaker Java CLI.
 "
 
 usage() { echo "${USAGE}"; }
@@ -222,10 +227,35 @@ cmd_mirror_maker() {
         ;;
     esac
 
+    # --consumer.configs is a custom opt for this kafka shell wrapper.
+    # This allows multiple --consumer.config opts to be specified using
+    # a single shell glob instead of multiple opts.
+    while [ $# -gt 0 ]; do
+      case "${1}" in
+          --consumer.configs)
+          # Filename expand $2 and add --consumer.config opt for each file.
+          for consumer_config in $2; do
+              MIRROR_MAKER_ARGS="${MIRROR_MAKER_ARGS} --consumer.config ${consumer_config}"
+          done
+          shift
+          ;;
+      --whitelist|--blacklist)
+          # This opt is a regex.  We need to do special quoting
+          # to make sure we don't accidentally filename expand it.
+          MIRROR_MAKER_ARGS="${MIRROR_MAKER_ARGS} ${1} '${2}'"
+          shift
+          ;;
+      *)
+          MIRROR_MAKER_ARGS="${MIRROR_MAKER_ARGS} ${1}"
+          ;;
+      esac
+      shift
+    done
+
     export JMX_PORT="${JMX_PORT:-9993}"
-    export KAFKA_LOG4J_OPTS="${KAFKA_LOG4J_OPTS:--Dlog4j.configuration=file:${KAFKA_CONFIG}/log4j.properties}"
+    export KAFKA_LOG4J_OPTS="${KAFKA_LOG4J_OPTS:--Dlog4j.configuration=file:${KAFKA_CONFIG}/mirror/log4j.properties}"
     export KAFKA_HEAP_OPTS="${KAFKA_HEAP_OPTS:--Xmx1G -Xms1G}"
-    kafka_run_class ${EXTRA_ARGS} kafka.tools.MirrorMaker "$@"
+    kafka_run_class ${EXTRA_ARGS} kafka.tools.MirrorMaker $MIRROR_MAKER_ARGS
 }
 
 cmd_consumer_offset_checker() {
